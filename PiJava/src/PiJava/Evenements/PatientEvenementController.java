@@ -10,6 +10,7 @@ import Entities.evenement;
 import PiJava.Home.SecondHomeController;
 import PiJava.PiJava;
 import Service.EvenementService;
+import Service.SendMail;
 import Service.ServiceNotification;
 import java.io.IOException;
 import java.net.URL;
@@ -23,13 +24,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
@@ -39,46 +47,79 @@ import javafx.stage.Stage;
  */
 public class PatientEvenementController implements Initializable {
 
-     @FXML
-    private TableColumn<evenement, String> ev_name;
-    @FXML
-    private TableColumn<evenement, String> ev_descr;
-    @FXML
-    private TableColumn<evenement, Date> event_date;
-    @FXML
-    private TableColumn<evenement, String> event_prix;
-    @FXML
-    private TableColumn<evenement, String> event_amount;
-    @FXML
     private TableView<evenement> table;
     private Button Leave;
     @FXML
     private Button join;
     @FXML
     private Button leave;
-    @FXML
-    private TableColumn<evenement, Integer > participants;
     public int idUser;
     @FXML
     private Button retour;
+    @FXML
+    private HBox hbox;
+    @FXML
+    private ScrollPane scroll_obj;
+    @FXML
+    private GridPane grid_obj;
+    private EvenementListenner listenner;
+    private TextField hidden;
 
     /**
      * Initializes the controller class.
      */
     
+    
+     private void setChosenEvenement(evenement evenement) {
+        //select row 
+        hidden.setText("" + evenement.getId());
+
+    }
+    
       public void show()
-    { EvenementService cr = new EvenementService();
-    ObservableList<evenement> data = FXCollections.observableArrayList(cr.getAll("Patient",idUser));
-          // TODO
-        ev_name.setCellValueFactory(new PropertyValueFactory("nom_event"));
-        ev_descr.setCellValueFactory(new PropertyValueFactory("description_event"));
-        event_date.setCellValueFactory(new PropertyValueFactory("date"));
-        event_prix.setCellValueFactory(new PropertyValueFactory("prix_event"));
-        event_amount.setCellValueFactory(new PropertyValueFactory("nbr_place"));
-                participants.setCellValueFactory(new PropertyValueFactory("participants"));
+    {    EvenementService cr = new EvenementService();
+        ObservableList<evenement> events = FXCollections.observableArrayList(cr.getAll("Patient",idUser));
+        grid_obj.getChildren().clear();
+        if (events.size() > 0) {
+        listenner = new EvenementListenner() {
+            @Override
+            public void onClickListener(evenement evenement) {
+                setChosenEvenement(evenement);
+            }};}
+        
+        int column = 0;
+        int row = 1;
+        try {
+            for (int i = 0; i < events.size(); i++) {
+                FXMLLoader fxmlloader = new FXMLLoader();
+                fxmlloader.setLocation(getClass().getResource("/PiJava/Evenements/ItemObj.fxml"));
+                AnchorPane anchorPane = fxmlloader.load();
+                ItemObjController itmc = fxmlloader.getController();
+                itmc.idUser=idUser;
+                itmc.setData(events.get(i), listenner,idUser);
+                if (column == 2) {
+                    column = 0;
+                    row++;
+                }
+                grid_obj.add(anchorPane, column++, row);
+                grid_obj.setMinWidth(Region.USE_COMPUTED_SIZE);
+                grid_obj.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                grid_obj.setMaxWidth(Region.USE_PREF_SIZE);
 
+                grid_obj.setMinHeight(Region.USE_COMPUTED_SIZE);
+                grid_obj.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                grid_obj.setMaxHeight(Region.USE_PREF_SIZE);
 
-        table.setItems(data);
+                //grid_obj.setStyle("-fx-background-image: url(\"/Images/back.png\");");
+                grid_obj.setStyle("-fx-background-color: rgba(220,245,198,0.5)");
+
+                GridPane.setMargin(anchorPane, new Insets(10));
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PatientEvenementController.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
     }
         public void initializeFxml() {
          show();
@@ -93,10 +134,12 @@ public class PatientEvenementController implements Initializable {
     private void Join(ActionEvent event) {
   evenement evenement = table.getSelectionModel().getSelectedItem();
   EvenementService evs = new EvenementService();
+
             Reservation r = new Reservation(idUser,evenement.getId());
   evs.JoinEvent(r);
    ServiceNotification Notification = new ServiceNotification();
     Notification.Notification("Succee", "participation confirme");
+    
   join.setVisible(false);
         leave.setVisible(false);
         show();
@@ -118,7 +161,6 @@ public class PatientEvenementController implements Initializable {
   
     }
 
-    @FXML
     private void clickTab(MouseEvent event) {
         
            evenement evenement = table.getSelectionModel().getSelectedItem();

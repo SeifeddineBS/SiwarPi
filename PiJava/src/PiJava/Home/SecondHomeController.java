@@ -155,8 +155,9 @@ public class SecondHomeController implements Initializable {
         }
 
         PatientEvenementController HomeScene = loader.getController();
+                HomeScene.idUser = idPatient;
+
         HomeScene.initializeFxml();
-        HomeScene.idUser = idPatient;
 
         Stage window = (Stage) events.getScene().getWindow();
         String css = PiJava.class.getResource("Style.css").toExternalForm();

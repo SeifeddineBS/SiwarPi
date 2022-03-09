@@ -294,8 +294,8 @@ public class ExpertEvenementController implements Initializable {
             BufferedImage bufferedImage = ImageIO.read(selectedFile);
             WritableImage image = SwingFXUtils.toFXImage(bufferedImage, null);
 
-            //this.image.setText(selectedFile.getName());
-            this.pictureLink = selectedFile.toURI().toURL().toString();
+            //this.image.setText(selectedFile.getName());;
+            this.pictureLink = selectedFile.getName();
             //  this.ev_image.setText(selectedFile.toURI().toURL().toString());
             imview.setImage(image);
         }

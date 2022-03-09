@@ -5,6 +5,7 @@
  */
 package Service;
 
+import Entities.Expert;
 import Entities.evenement;
 import Entities.Reservation;
 import Interfaces.IEvenementService;
@@ -124,6 +125,8 @@ ObservableList<evenement> myList = FXCollections.observableArrayList();
                     e.setImage(rs.getString("image"));
                         e.setValide(rs.getString("valide"));
                    e.setParticipants(rs.getInt("participants"));
+                    e.setIdUser(rs.getInt("id_user"));
+
 
 
 
@@ -295,7 +298,35 @@ ObservableList<evenement> myList = FXCollections.observableArrayList();
         }
            
     }
+          
+          
+          
+           public Expert getExpert(int id) { // charger données Client pour la modification
+
+        Statement stm = null;
+        Expert c = new Expert();
+
+        try {
+            stm = cnx.createStatement();
+            String query = "SELECT * FROM `expert`  WHERE idExpert="+id;
+            ResultSet rst = stm.executeQuery(query);
+
+            while (rst.next()) {
+                c.setNom(rst.getString("nom"));
+                c.setPrenom(rst.getString("prenom"));
+                    c.setAdresseMail(rst.getString("adresseMail"));
+
+               
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+
+        }
+        return c;
+
+    }
      
      
      
-};
+}
