@@ -71,20 +71,17 @@ public class PatientEvenementController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
-    
-     private void setChosenEvenement(evenement evenement) {
+    private void setChosenEvenement(evenement evenement) {
         //select row 
         hidden.setText("" + evenement.getId());
 
     }
-    
-      public void show()
-    {    EvenementService cr = new EvenementService();
-        ObservableList<evenement> events = FXCollections.observableArrayList(cr.getAll("Patient",idUser));
+
+    public void show() {
+        EvenementService cr = new EvenementService();
+        ObservableList<evenement> events = FXCollections.observableArrayList(cr.getAll("Patient", idUser));
         grid_obj.getChildren().clear();
-       
-        
+
         int column = 0;
         int row = 1;
         try {
@@ -93,8 +90,8 @@ public class PatientEvenementController implements Initializable {
                 fxmlloader.setLocation(getClass().getResource("/PiJava/Evenements/ObjEvenement.fxml"));
                 AnchorPane anchorPane = fxmlloader.load();
                 ObjEvenementController itmc = fxmlloader.getController();
-                itmc.idUser=idUser;
-                itmc.setData(events.get(i),idUser);
+                itmc.idUser = idUser;
+                itmc.setData(events.get(i), idUser);
                 if (column == 2) {
                     column = 0;
                     row++;
@@ -109,7 +106,6 @@ public class PatientEvenementController implements Initializable {
                 grid_obj.setMaxHeight(Region.USE_PREF_SIZE);
 
                 //grid_obj.setStyle("-fx-background-image: url(\"/Images/back.png\");");
-
                 GridPane.setMargin(anchorPane, new Insets(10));
 
             }
@@ -118,17 +114,18 @@ public class PatientEvenementController implements Initializable {
 
         }
     }
-        public void initializeFxml() {
-         show();
+
+    public void initializeFxml() {
+        show();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-   join.setVisible(false);
-        leave.setVisible(false);   
-    }   
-    
-    
-      public boolean Suppression_Box(String title, String message) {
+        join.setVisible(false);
+        leave.setVisible(false);
+    }
+
+    public boolean Suppression_Box(String title, String message) {
         boolean sortie = false;
         Alert.AlertType Type = Alert.AlertType.CONFIRMATION;
         Alert alert = new Alert(Type, "");
@@ -145,76 +142,66 @@ public class PatientEvenementController implements Initializable {
         return sortie;
 
     }
-    
-        @FXML
+
+    @FXML
     private void Join(ActionEvent event) {
-        
-    Boolean suppressionBox = Suppression_Box("Commentaire", "Vous etes sur le point de rejoindre cet evenement");
-    
-    
-    if(suppressionBox)
-    {
-                
-  evenement evenement = table.getSelectionModel().getSelectedItem();
-  EvenementService evs = new EvenementService();
 
-            Reservation r = new Reservation(idUser,evenement.getId());
-  evs.JoinEvent(r);
-   ServiceNotification Notification = new ServiceNotification();
-    Notification.Notification("Succee", "participation confirme");
-    
-  join.setVisible(false);
-        leave.setVisible(false);
-        show();
-    }
+        Boolean suppressionBox = Suppression_Box("Commentaire", "Vous etes sur le point de rejoindre cet evenement");
 
-        
+        if (suppressionBox) {
 
+            evenement evenement = table.getSelectionModel().getSelectedItem();
+            EvenementService evs = new EvenementService();
+
+            Reservation r = new Reservation(idUser, evenement.getId());
+            evs.JoinEvent(r);
+            ServiceNotification Notification = new ServiceNotification();
+            Notification.Notification("Succee", "participation confirme");
+
+            join.setVisible(false);
+            leave.setVisible(false);
+            show();
+        }
 
     }
 
     @FXML
     private void Leave(ActionEvent event) {
-          Boolean suppressionBox = Suppression_Box("Commentaire", "Vous etes sur le point d'annuler votre reservation");
-    
-    
-    if(suppressionBox)
-    {
-         evenement evenement = table.getSelectionModel().getSelectedItem();
-  EvenementService evs = new EvenementService();
-    Reservation r = new Reservation(idUser,evenement.getId());
-  evs.DeleteReservation(r);
-       ServiceNotification Notification = new ServiceNotification();
-            Notification.Notification("Succee", "participation annulée");
-  join.setVisible(false);
-        leave.setVisible(false);
-                show();
+        Boolean suppressionBox = Suppression_Box("Commentaire", "Vous etes sur le point d'annuler votre reservation");
 
-    }
+        if (suppressionBox) {
+            evenement evenement = table.getSelectionModel().getSelectedItem();
+            EvenementService evs = new EvenementService();
+            Reservation r = new Reservation(idUser, evenement.getId());
+            evs.DeleteReservation(r);
+            ServiceNotification Notification = new ServiceNotification();
+            Notification.Notification("Succee", "participation annulée");
+            join.setVisible(false);
+            leave.setVisible(false);
+            show();
+
+        }
     }
 
     private void clickTab(MouseEvent event) {
-        
-           evenement evenement = table.getSelectionModel().getSelectedItem();
-          
-            EvenementService evs = new EvenementService();
-    if(evs.verifierUser(idUser, evenement.getId())){
-        join.setVisible(false);
-        leave.setVisible(true);
-        
-        
-    }
-    else{
-           join.setVisible(true);
-        leave.setVisible(false);
+
+        evenement evenement = table.getSelectionModel().getSelectedItem();
+
+        EvenementService evs = new EvenementService();
+        if (evs.verifierUser(idUser, evenement.getId())) {
+            join.setVisible(false);
+            leave.setVisible(true);
+
+        } else {
+            join.setVisible(true);
+            leave.setVisible(false);
+        }
+
     }
 
-    
-    }
-
-     @FXML
+    @FXML
     private void retour(ActionEvent event) {
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("/PiJava/Home/SecondHome.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/PiJava/Home/SecondHome.fxml"));
 
         Parent root = null;
         try {
@@ -234,5 +221,5 @@ public class PatientEvenementController implements Initializable {
 
         window.setScene(new Scene(root, 600, 400));
     }
-    
+
 }

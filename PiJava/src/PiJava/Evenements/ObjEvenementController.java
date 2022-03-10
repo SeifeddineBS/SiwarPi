@@ -11,15 +11,19 @@ import Service.EvenementService;
 import Service.SendMail;
 import Service.ServiceNotification;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 
 /**
  * FXML Controller class
@@ -101,40 +105,65 @@ public class ObjEvenementController implements Initializable {
             icone.setImage(image);
         }
     }
+    
+       public boolean Suppression_Box(String title, String message) {
+        boolean sortie = false;
+        Alert.AlertType Type = Alert.AlertType.CONFIRMATION;
+        Alert alert = new Alert(Type, "");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            sortie = true;
+        } else if (result.get() == ButtonType.CANCEL) {
+            sortie = false;
+        }
+
+        return sortie;
+
+    }
 
     @FXML
     private void Join(ActionEvent event) {
+        Boolean suppressionBox = Suppression_Box("Evenement", "Vous etes sur le point de rejoindre cet evenement");
+
+        if (suppressionBox) {
         System.out.println("Hey"+idUser);
         EvenementService evs = new EvenementService();
         Reservation r = new Reservation(idUser, evenement.getId());
         evs.JoinEvent(r);
         ServiceNotification Notification = new ServiceNotification();
         
-        Notification.Notification("Succee", "participation confirme");
         join.setVisible(false);
         leave.setVisible(true);
             SendMail sendMail = new SendMail();
 
     sendMail.envoyerMail(evs.getExpert(evenement.getIdUser()).getAdresseMail(), "Une nouvelle reservation a votre evenement", "Une nouvelle reservation a votre evenement "+evenement.getNom_event());
-    
+                Notification.Notification("Succee", "participation confirme");
+
+        
+        }
 
     }
 
     @FXML
     private void Leave(ActionEvent event) {
-        System.out.println("Hey"+idUser);
+          Boolean suppressionBox = Suppression_Box("Evenement", "Vous etes sur le point d'annuler votre reservation");
+
+        if (suppressionBox) {
 
         EvenementService evs = new EvenementService();
         Reservation r = new Reservation(idUser, evenement.getId());
         evs.DeleteReservation(r);
         ServiceNotification Notification = new ServiceNotification();
-        Notification.Notification("Succee", "participation annulée");
         join.setVisible(true);
         leave.setVisible(false);
         
             SendMail sendMail = new SendMail();
             sendMail.envoyerMail(evs.getExpert(evenement.getIdUser()).getAdresseMail(), "Une  reservation annulée a votre evenement", "Une  reservation a ete annulée a votre evenement "+evenement.getNom_event());
-    
+            Notification.Notification("Succee", "participation annulée");
 
+        }
     }
 }
