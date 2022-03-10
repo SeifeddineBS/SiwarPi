@@ -46,6 +46,6 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="showCommentaire" layoutX="98.0" layoutY="157.0" mnemonicParsing="false" onAction="#showCommentaire" prefHeight="26.0" prefWidth="202.0" text="Commentaires" />
+      <Button fx:id="showCommentaire" layoutX="98.0" layoutY="157.0" mnemonicParsing="false" onAction="#showCommentaire" prefHeight="26.0" prefWidth="202.0" text="Commenter" />
    </children>
 </AnchorPane>

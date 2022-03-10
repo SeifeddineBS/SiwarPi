@@ -60,7 +60,7 @@
             <Font name="Broadway" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="join" layoutX="288.0" layoutY="21.0" mnemonicParsing="false" onAction="#Join" prefHeight="26.0" prefWidth="184.0" text="Join" />
-      <Button fx:id="leave" layoutX="288.0" layoutY="21.0" mnemonicParsing="false" onAction="#Leave" prefHeight="26.0" prefWidth="184.0" text="Leave" />
+      <Button fx:id="join" layoutX="288.0" layoutY="21.0" mnemonicParsing="false" onAction="#Join" prefHeight="26.0" prefWidth="184.0" text="Rejoindre" />
+      <Button fx:id="leave" layoutX="288.0" layoutY="21.0" mnemonicParsing="false" onAction="#Leave" prefHeight="26.0" prefWidth="184.0" text="Annuler" />
    </children>
 </AnchorPane>

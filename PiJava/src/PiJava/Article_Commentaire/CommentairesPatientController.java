@@ -158,6 +158,8 @@ public class CommentairesPatientController implements Initializable {
             modifier.setVisible(true);
             supprimer.setVisible(true);
             inputAjout.setText(commentaire.getContenu());
+            userName.setText("");
+
 
         } else {
         userName.setVisible(true);
