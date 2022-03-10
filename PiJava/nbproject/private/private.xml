@@ -3,17 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/ItemObj.fxml</file>
-            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/EvenementListenner.java</file>
-            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/PatientEvenement.fxml</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/ObjEvenement.fxml</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/PiJava.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Home/HomeController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/ArticleAdminController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Interfaces/Iarticle.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/PatientArticle.fxml</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Service/ArticleService.java</file>
             <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Service/EvenementService.java</file>
             <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Service/SendMail.java</file>
-            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/ExpertEvenementController.java</file>
-            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/PatientEvenementController.java</file>
-            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/ItemObjController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/ObjArticle.fxml</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/ObjArticleController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/ObjEvenementController.java</file>
             <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/AdminEvenementController.java</file>
-            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Home/SecondHomeController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Service/CommentaireService.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/PatientEvenement.fxml</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Entities/Article.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Entities/Commentaire.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/PatientEvenementController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/ArticleExpertController.java</file>
             <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/Entities/Expert.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/PatientArticleController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/CommentairesPatient.fxml</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Article_Commentaire/CommentairesPatientController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Evenements/ExpertEvenementController.java</file>
+            <file>file:/C:/Users/SeifBS/Documents/GitHub/SiwarPi/PiJava/src/PiJava/Home/SecondHomeController.java</file>
         </group>
     </open-files>
 </project-private>

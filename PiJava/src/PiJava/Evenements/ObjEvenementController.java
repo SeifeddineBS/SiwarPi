@@ -26,7 +26,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Chirine
  */
-public class ItemObjController implements Initializable {
+public class ObjEvenementController implements Initializable {
 
     @FXML
     private Label lb_desc;
@@ -34,7 +34,7 @@ public class ItemObjController implements Initializable {
     private Label lb_rep;
 
     private evenement evenement;
-    private EvenementListenner listenner;
+  
     @FXML
     private Label lb_date;
     @FXML
@@ -69,7 +69,7 @@ public class ItemObjController implements Initializable {
 
     }
 
-    public void setData(evenement evenement, EvenementListenner ol,int idUser) {
+    public void setData(evenement evenement,int idUser) {
         this.idUser=idUser;
         EvenementService evs = new EvenementService();
         if (evs.verifierUser(idUser, evenement.getId())) {
@@ -82,7 +82,6 @@ public class ItemObjController implements Initializable {
         }
 
         this.evenement = evenement;
-        listenner = ol;
         lb_desc.setWrapText(true);
         lb_desc.setText(evenement.getNom_event());
         lb_rep.setText("" + evenement.getPrix_event());

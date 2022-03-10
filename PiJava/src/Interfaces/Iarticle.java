@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
  */
  public interface Iarticle {
     public void ajouter (Article o);
-    public List<Article> showArticle(int id_user);
+    public List<Article> showArticle(int id_user,String role);
     public void modifier (Article a);
      public ObservableList<Article> trier(int id_user);
      public ObservableList<Article> trierc();

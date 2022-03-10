@@ -9,6 +9,7 @@ import PiJava.Article_Commentaire.ArticleAdminController;
 import PiJava.Article_Commentaire.ArticleExpertController;
 import PiJava.Evenements.AdminEvenementController;
 import PiJava.Evenements.ExpertEvenementController;
+import PiJava.Article_Commentaire.PatientArticleController;
 import PiJava.Evenements.PatientEvenementController;
 import PiJava.PiJava;
 import java.io.IOException;
@@ -36,9 +37,9 @@ public class SecondHomeController implements Initializable {
     private Button articles;
     @FXML
     private Button events;
-    int idPatient;
-    int idExpert;
-    int idAdmin;
+   public int idPatient;
+    public int idExpert;
+    public int idAdmin;
 
     public String role;
     @FXML
@@ -63,6 +64,8 @@ public class SecondHomeController implements Initializable {
         } else if (this.role.equals("Admin")) {
             this.adminArticles();
         }
+        else if(this.role.equals("Patient"))
+            this.patientArticles();
 
     }
 
@@ -77,7 +80,7 @@ public class SecondHomeController implements Initializable {
         }
 
         ArticleExpertController HomeScene = loader.getController();
-        HomeScene.id_user = idExpert;
+        HomeScene.idUser = idExpert;
         HomeScene.initializeFxml();
         Stage window = (Stage) articles.getScene().getWindow();
         String css = PiJava.class.getResource("Style.css").toExternalForm();
@@ -96,7 +99,7 @@ public class SecondHomeController implements Initializable {
         }
 
         ArticleAdminController HomeScene = loader.getController();
-        HomeScene.id_user = idAdmin;
+        HomeScene.idUser = idAdmin;
 
         HomeScene.initializeFxml(idAdmin);
         Stage window = (Stage) articles.getScene().getWindow();
@@ -165,6 +168,28 @@ public class SecondHomeController implements Initializable {
 
         window.setScene(new Scene(root, 1182, 718));
 
+    }
+    
+    public void patientArticles()
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/PiJava/Article_Commentaire/PatientArticle.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(SecondHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        PatientArticleController HomeScene = loader.getController();
+                HomeScene.idUser = idPatient;
+
+        HomeScene.initializeFxml();
+
+        Stage window = (Stage) events.getScene().getWindow();
+        String css = PiJava.class.getResource("Style.css").toExternalForm();
+        root.getStylesheets().add(css);
+
+        window.setScene(new Scene(root, 1182, 718));
     }
 
     @FXML

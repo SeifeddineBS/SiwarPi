@@ -15,6 +15,7 @@ import Service.ServiceNotification;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +28,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,6 +41,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -62,7 +66,6 @@ public class PatientEvenementController implements Initializable {
     private ScrollPane scroll_obj;
     @FXML
     private GridPane grid_obj;
-    private EvenementListenner listenner;
     private TextField hidden;
 
     /**
@@ -80,23 +83,18 @@ public class PatientEvenementController implements Initializable {
     {    EvenementService cr = new EvenementService();
         ObservableList<evenement> events = FXCollections.observableArrayList(cr.getAll("Patient",idUser));
         grid_obj.getChildren().clear();
-        if (events.size() > 0) {
-        listenner = new EvenementListenner() {
-            @Override
-            public void onClickListener(evenement evenement) {
-                setChosenEvenement(evenement);
-            }};}
+       
         
         int column = 0;
         int row = 1;
         try {
             for (int i = 0; i < events.size(); i++) {
                 FXMLLoader fxmlloader = new FXMLLoader();
-                fxmlloader.setLocation(getClass().getResource("/PiJava/Evenements/ItemObj.fxml"));
+                fxmlloader.setLocation(getClass().getResource("/PiJava/Evenements/ObjEvenement.fxml"));
                 AnchorPane anchorPane = fxmlloader.load();
-                ItemObjController itmc = fxmlloader.getController();
+                ObjEvenementController itmc = fxmlloader.getController();
                 itmc.idUser=idUser;
-                itmc.setData(events.get(i), listenner,idUser);
+                itmc.setData(events.get(i),idUser);
                 if (column == 2) {
                     column = 0;
                     row++;
@@ -111,7 +109,6 @@ public class PatientEvenementController implements Initializable {
                 grid_obj.setMaxHeight(Region.USE_PREF_SIZE);
 
                 //grid_obj.setStyle("-fx-background-image: url(\"/Images/back.png\");");
-                grid_obj.setStyle("-fx-background-color: rgba(220,245,198,0.5)");
 
                 GridPane.setMargin(anchorPane, new Insets(10));
 
@@ -128,10 +125,36 @@ public class PatientEvenementController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
    join.setVisible(false);
         leave.setVisible(false);   
-    }    
+    }   
+    
+    
+      public boolean Suppression_Box(String title, String message) {
+        boolean sortie = false;
+        Alert.AlertType Type = Alert.AlertType.CONFIRMATION;
+        Alert alert = new Alert(Type, "");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            sortie = true;
+        } else if (result.get() == ButtonType.CANCEL) {
+            sortie = false;
+        }
+
+        return sortie;
+
+    }
     
         @FXML
     private void Join(ActionEvent event) {
+        
+    Boolean suppressionBox = Suppression_Box("Commentaire", "Vous etes sur le point de rejoindre cet evenement");
+    
+    
+    if(suppressionBox)
+    {
+                
   evenement evenement = table.getSelectionModel().getSelectedItem();
   EvenementService evs = new EvenementService();
 
@@ -143,11 +166,20 @@ public class PatientEvenementController implements Initializable {
   join.setVisible(false);
         leave.setVisible(false);
         show();
+    }
+
+        
+
 
     }
 
     @FXML
     private void Leave(ActionEvent event) {
+          Boolean suppressionBox = Suppression_Box("Commentaire", "Vous etes sur le point d'annuler votre reservation");
+    
+    
+    if(suppressionBox)
+    {
          evenement evenement = table.getSelectionModel().getSelectedItem();
   EvenementService evs = new EvenementService();
     Reservation r = new Reservation(idUser,evenement.getId());
@@ -158,7 +190,7 @@ public class PatientEvenementController implements Initializable {
         leave.setVisible(false);
                 show();
 
-  
+    }
     }
 
     private void clickTab(MouseEvent event) {
@@ -192,7 +224,7 @@ public class PatientEvenementController implements Initializable {
         }
 
         SecondHomeController HomeScene = loader.getController();
-        //HomeScene.id_user = this.id;
+        HomeScene.idPatient = this.idUser;
         HomeScene.role = "Patient";
 
         //HomeScene.initializeFxml(idExpert);

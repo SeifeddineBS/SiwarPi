@@ -23,7 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import Service.serviceArticle;
+import Service.ArticleService;
 
 import java.nio.file.CopyOption;
 import java.nio.file.StandardCopyOption;
@@ -65,7 +65,7 @@ public class ArticleAdminController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    public int id_user ;
+    public int idUser ;
 
     @FXML
     private Button approuverarticle;
@@ -81,7 +81,7 @@ public class ArticleAdminController implements Initializable {
     }
 
     public void showArticles() {
-        serviceArticle sop = new serviceArticle();
+        ArticleService sop = new ArticleService();
         ObservableList<Article> articles = sop.showArticleAdmin();
         coltitre.setCellValueFactory(new PropertyValueFactory<>("titre"));
         coltheme.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -107,7 +107,7 @@ public class ArticleAdminController implements Initializable {
         k = a.getArticle();
 
 
-        serviceArticle sa = new serviceArticle();
+        ArticleService sa = new ArticleService();
 
         String approuver = null;
         if (a.getApprouver().equals("Oui")) {
@@ -147,7 +147,7 @@ public class ArticleAdminController implements Initializable {
         String k;
         k = a.getArticle();
 
-        serviceArticle sa = new serviceArticle();
+        ArticleService sa = new ArticleService();
 
         String approuver = null;
         if (a.getApprouver().equals("Oui")) {
@@ -168,7 +168,7 @@ public class ArticleAdminController implements Initializable {
     @FXML
     private void supprimer(ActionEvent event) {
         Article a = lab.getSelectionModel().getSelectedItem();
-        serviceArticle sa = new serviceArticle();
+        ArticleService sa = new ArticleService();
         sa.supprimerad(a);
         showArticles();
 
@@ -190,7 +190,7 @@ public class ArticleAdminController implements Initializable {
 
     @FXML
     private void trier(ActionEvent event) {
-        serviceArticle sop = new serviceArticle();
+        ArticleService sop = new ArticleService();
         ObservableList<Article> articles = sop.trierc();
 
         coltitre.setCellValueFactory(new PropertyValueFactory<>("titre"));
@@ -216,6 +216,8 @@ public class ArticleAdminController implements Initializable {
 
         SecondHomeController HomeScene = loader.getController();
         //HomeScene.id_user = this.id;
+                    HomeScene.idAdmin = this.idUser;
+
         HomeScene.role = "Admin";
 
         //HomeScene.initializeFxml(idExpert);

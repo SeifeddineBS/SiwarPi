@@ -32,7 +32,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
  *
  * @author akram
  */
-public class serviceArticle implements Iarticle {
+public class ArticleService implements Iarticle {
     private PDFParser parser;
     private PDFTextStripper pdfStripper;
     private PDDocument pdDoc;
@@ -45,7 +45,7 @@ public class serviceArticle implements Iarticle {
 
     Connection cnx;
 
-    public serviceArticle() {
+    public ArticleService() {
         cnx = Connexion.getInstance().getConnection();
     }
 
@@ -78,18 +78,22 @@ String datee = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().
    
              
      
-    @Override
-    public ObservableList<Article> showArticle(int id_user) {
+    public ObservableList<Article> showArticle(int id_user,String role) {
         Statement stm = null;
         ObservableList<Article> articles = FXCollections.observableArrayList();
 
-
+String query=null;
         try {
 
             //try {
             stm = Connexion.getInstance().getConnection().createStatement();
+            if(role.equals("Patient"))
+                             query = "SELECT * FROM article WHERE approuver='Oui'  ";
 
-            String query = "SELECT * FROM article WHERE id_user= "+id_user+" ";
+            else
+          query = "SELECT * FROM article WHERE id_user= "+id_user+" ";
+
+
             ResultSet rs = stm.executeQuery(query);
             
             while (rs.next()) {
@@ -115,7 +119,7 @@ String datee = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().
 
             //}
         } catch (SQLException ex) {
-            Logger.getLogger(serviceArticle.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticleService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -237,7 +241,7 @@ String datee = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().
 
             //}
         } catch (SQLException ex) {
-            Logger.getLogger(serviceArticle.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticleService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -281,7 +285,7 @@ String datee = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().
 
             //}
         } catch (SQLException ex) {
-            Logger.getLogger(serviceArticle.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticleService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -346,7 +350,7 @@ String datee = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().
 
             //}
         } catch (SQLException ex) {
-            Logger.getLogger(serviceArticle.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticleService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return articles;
@@ -436,7 +440,7 @@ PDDocument document = PDDocument.load(f);
 
             //}
         } catch (SQLException ex) {
-            Logger.getLogger(serviceArticle.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticleService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

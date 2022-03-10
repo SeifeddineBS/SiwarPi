@@ -10,7 +10,6 @@ import PiJava.Home.SecondHomeController;
 import PiJava.PiJava;
 import Service.EvenementService;
 import Service.ServiceNotification;
-import com.jfoenix.controls.JFXDatePicker;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -64,7 +63,6 @@ public class AdminEvenementController implements Initializable {
     private TableColumn<evenement, String> valide;
     @FXML
     private Button retour;
-    private JFXDatePicker date;
     @FXML
     private PieChart statEvents;
 
@@ -154,6 +152,8 @@ public class AdminEvenementController implements Initializable {
 
         SecondHomeController HomeScene = loader.getController();
         //HomeScene.id_user = this.id;
+                        //HomeScene.idAdmin = this.idUser;
+
         HomeScene.role = "Admin";
 
         //HomeScene.initializeFxml(idExpert);
@@ -178,11 +178,7 @@ public class AdminEvenementController implements Initializable {
         return sdf.format(d);
     }
 
-    private void dateButton(ActionEvent event) {
-        LocalDate lDate = date.getValue();
-        System.out.println(lDate);
-
-    }
+   
     public static boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);

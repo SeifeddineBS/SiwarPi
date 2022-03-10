@@ -17,7 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import Service.serviceArticle;
+import Service.ArticleService;
 import utils.Connexion;
 import java.io.File;
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class ArticleExpertController implements Initializable {
     File[] filesdoc = Paths.get("src\\pdfArticles\\").toFile().listFiles();
     @FXML
     private Label label;
-    public int id_user;
+    public int idUser;
     
     @FXML
     private Button retour;
@@ -120,18 +120,18 @@ public class ArticleExpertController implements Initializable {
     }
 
     public void initializeFxml() {
-        serviceArticle sop = new serviceArticle();
+        ArticleService sop = new ArticleService();
         showart();
 
-        search_user(id_user);
+        search_user(idUser);
 
     }
 
     private void showart() {
 
-        serviceArticle sop = new serviceArticle();
+        ArticleService sop = new ArticleService();
         
-        ObservableList<Article> articles = sop.showArticle(id_user);
+        ObservableList<Article> articles = sop.showArticle(idUser,"");
         System.out.println(articles.toString());
         coltitre.setCellValueFactory(new PropertyValueFactory<>("titre"));
         coltheme.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -144,7 +144,7 @@ public class ArticleExpertController implements Initializable {
 
     @FXML
     private void addart(ActionEvent event) throws IOException {
-        serviceArticle s = new serviceArticle();
+        ArticleService s = new ArticleService();
         PDFManager pdfManager = new PDFManager();
         Article a = new Article();
         String k;
@@ -169,7 +169,7 @@ public class ArticleExpertController implements Initializable {
             a.setTitre(estitre.getText());
             a.setTheme(estheme.getText());
             a.setNom_auteur(esauteur.getText());
-            a.setId_user(id_user);
+            a.setId_user(idUser);
             //  a.setArticle(esarticle.getText());
 
             a.setArticle(k);
@@ -271,7 +271,7 @@ public class ArticleExpertController implements Initializable {
 
         } else {
 
-            serviceArticle sa = new serviceArticle();
+            ArticleService sa = new ArticleService();
 
             Article a = lab.getSelectionModel().getSelectedItem();
 
@@ -316,7 +316,7 @@ public class ArticleExpertController implements Initializable {
     @FXML
     private void suppar(ActionEvent event) {
         Article a = lab.getSelectionModel().getSelectedItem();
-        serviceArticle sa = new serviceArticle();
+        ArticleService sa = new ArticleService();
 
         if (a == null) {
             alert_Box("Verifier", "Veuillez selectionner un article");
@@ -340,8 +340,8 @@ public class ArticleExpertController implements Initializable {
 
     @FXML
     private void triert(ActionEvent event) {
-        serviceArticle sop = new serviceArticle();
-        ObservableList<Article> articles = sop.trier(id_user);
+        ArticleService sop = new ArticleService();
+        ObservableList<Article> articles = sop.trier(idUser);
 
         coltitre.setCellValueFactory(new PropertyValueFactory<>("titre"));
         coltheme.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -354,7 +354,7 @@ public class ArticleExpertController implements Initializable {
 
 
     private void search_user(int id_user) {
-        serviceArticle sop = new serviceArticle();
+        ArticleService sop = new ArticleService();
         //ObservableList<article> articles = sop.showArticle(id_user);
         ObservableList<Article> articles = FXCollections.observableArrayList();
 
@@ -438,7 +438,8 @@ public class ArticleExpertController implements Initializable {
         }
 
         SecondHomeController HomeScene = loader.getController();
-        //HomeScene.id_user = this.id;
+                HomeScene.idExpert = this.idUser;
+
         HomeScene.role = "Expert";
 
         //HomeScene.initializeFxml(idExpert);

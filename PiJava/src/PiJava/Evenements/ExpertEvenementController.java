@@ -328,7 +328,8 @@ public class ExpertEvenementController implements Initializable {
         }
 
         SecondHomeController HomeScene = loader.getController();
-        //HomeScene.id_user = this.id;
+        HomeScene.idExpert = this.idUser;
+
         HomeScene.role = "Expert";
 
         //HomeScene.initializeFxml(idExpert);
