@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 10, 2022 at 03:28 AM
+-- Generation Time: Mar 10, 2022 at 05:50 PM
 -- Server version: 5.7.31
 -- PHP Version: 8.0.3
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `theme` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fkk` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `article`
@@ -62,7 +62,10 @@ CREATE TABLE IF NOT EXISTS `article` (
 
 INSERT INTO `article` (`id`, `titre`, `date`, `article`, `nom_auteur`, `id_user`, `approuver`, `theme`) VALUES
 (11, 'article1', '17/02/2022', 'CH8elzuz.pdf', 'auteur', 1, 'Oui', 'theme'),
-(12, 'titre1', '17/02/2022', 'H69r2Y59.pdf', 'auteur', 1, 'Oui', 'theme2');
+(12, 'titre1', '17/02/2022', 'H69r2Y59.pdf', 'auteur', 1, 'Oui', 'theme2'),
+(13, 'article', '10/03/2022', 'EI87SG6g.pdf', 'seif', 1, 'Non', 'theme'),
+(14, 'hey', '10/03/2022', 'vbm4E8HT.pdf', 'aa', 1, 'Non', 'aa'),
+(15, 'heyyyyyy', '10/03/2022', 'VWgTKC6l.pdf', 'xxxx', 1, 'Non', 'heeeeeeeeeeeu');
 
 -- --------------------------------------------------------
 
@@ -97,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id`),
   KEY `fkUser` (`idUser`),
   KEY `fkArticle` (`idArticle`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `commentaire`
@@ -106,7 +109,9 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
 INSERT INTO `commentaire` (`id`, `contenu`, `date`, `idUser`, `idArticle`) VALUES
 (1, 'heyx', '10/03/2022 04:20', 1, 12),
 (2, 'hey', '10/03/2022 04:20', 1, 11),
-(3, 'heeeeeeeeeeeeey', '10/03/2022 04:21', 1, 11);
+(3, 'heeeeeeeeeeeeey', '10/03/2022 04:21', 1, 11),
+(4, 'helo', '10/03/2022 17:30', 2, 11),
+(5, 'test', '10/03/2022 17:30', 2, 11);
 
 -- --------------------------------------------------------
 
@@ -159,18 +164,23 @@ CREATE TABLE IF NOT EXISTS `evenement` (
   `id_user` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `evenement`
 --
 
 INSERT INTO `evenement` (`id`, `nom_event`, `date`, `description_event`, `prix_event`, `nbr_place`, `image`, `valide`, `participants`, `id_user`) VALUES
-(4, 'aa', '2022-02-07', 'bb', 1, 1, 'test.png', 'Oui', -2, 1),
-(5, 'Evenement', '2022-03-09', 'Description', 122, 4, 'test.png', 'Oui', 1, 1),
-(6, 'event', '2022-03-08', 'desc', 12, 13, 'test.png', 'Oui', 1, 1),
+(4, 'aa', '2022-02-07', 'bb', 1, 1, 'test.png', 'Oui', 1, 1),
+(5, 'Evenement', '2022-03-09', 'Description', 122, 4, 'test.png', 'Oui', 0, 1),
+(6, 'event', '2022-03-08', 'desc', 12, 1, 'test.png', 'Oui', 1, 1),
 (7, 'nom', '2022-03-16', 'description', 122, 12, 'test.png', 'Oui', 1, 1),
-(8, 'nom', '2022-03-22', 'desc', 12, 122, 'test.png', 'Oui', 1, 1);
+(8, 'nom', '2022-03-22', 'desc', 12, 122, 'test.png', 'Oui', 1, 1),
+(9, 'aa', '2022-03-11', 'aa', 12, 11, 'seifeddine BEN SALAH.png', 'Oui', 0, 1),
+(10, 'aa', '2022-03-23', 'aa', 122, 120, 'seifeddine BEN SALAH.png', 'Oui', 0, 1),
+(11, 'aa', '2022-03-16', 'aaa', 12, 12, 'dI1hEBdzseifeddine BEN SALAH.png', 'Oui', 0, 1),
+(12, 'hey', '2022-03-31', 'hey', 120, 0, 'pK8Si3hmtest.png', 'Oui', 0, 1),
+(13, 'aa', '2022-03-30', 'bbbbb', 122, 12, 'pK8Si3hmtest.png', 'Oui', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -322,17 +332,17 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   PRIMARY KEY (`id`),
   KEY `fk1` (`id_event`),
   KEY `fk2` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reservation`
 --
 
 INSERT INTO `reservation` (`id_user`, `id_event`, `id`) VALUES
-(1, 5, 12),
-(1, 6, 16),
+(3, 6, 16),
 (1, 7, 17),
-(1, 8, 18);
+(1, 8, 18),
+(3, 4, 21);
 
 -- --------------------------------------------------------
 
