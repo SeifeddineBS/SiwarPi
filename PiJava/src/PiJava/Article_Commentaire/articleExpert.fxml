@@ -29,7 +29,7 @@
       <Button layoutX="96.0" layoutY="273.0" mnemonicParsing="false" onAction="#modar" prefHeight="26.0" prefWidth="110.0" text="modifier" />
       <Button layoutX="371.0" layoutY="458.0" mnemonicParsing="false" onAction="#suppar" prefHeight="26.0" prefWidth="124.0" text="supprimer" />
       <Button layoutX="767.0" layoutY="458.0" mnemonicParsing="false" onAction="#triert" prefHeight="26.0" prefWidth="124.0" text="trier " />
-      <Button layoutX="96.0" layoutY="330.0" mnemonicParsing="false" onAction="#review" prefHeight="26.0" prefWidth="110.0" text="review" />
+      <Button layoutX="96.0" layoutY="330.0" mnemonicParsing="false" onAction="#review" prefHeight="26.0" prefWidth="110.0" text="voir" />
       <Button fx:id="retour" layoutX="14.0" layoutY="639.0" mnemonicParsing="false" onAction="#retour" text="Retour" />
    </children>
 </AnchorPane>

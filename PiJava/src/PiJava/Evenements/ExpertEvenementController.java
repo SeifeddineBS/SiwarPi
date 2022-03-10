@@ -13,7 +13,8 @@ import Entities.evenement;
 import PiJava.Home.SecondHomeController;
 import PiJava.PiJava;
 import java.net.URL;
-import java.sql.Date;
+import java.util.Date;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -44,6 +45,9 @@ import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import Service.EvenementService;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
@@ -69,7 +73,6 @@ public class ExpertEvenementController implements Initializable {
     @FXML
     private DatePicker ev_date;
 
-    
     ;
     @FXML
     private TableColumn<evenement, String> ev_name;
@@ -111,11 +114,13 @@ public class ExpertEvenementController implements Initializable {
     /**
      * Initializes the controller class.
      */
-            EvenementService cr = new EvenementService();
+    EvenementService cr = new EvenementService();
 
-    public void show()
-    {
-    ObservableList<evenement> data = FXCollections.observableArrayList(cr.getAll("Expert",idUser));
+    public ExpertEvenementController() {
+    }
+
+    public void show() {
+        ObservableList<evenement> data = FXCollections.observableArrayList(cr.getAll("Expert", idUser));
         ev_name.setCellValueFactory(new PropertyValueFactory("nom_event"));
         ev_descr.setCellValueFactory(new PropertyValueFactory("description_event"));
         event_date.setCellValueFactory(new PropertyValueFactory("date"));
@@ -123,16 +128,15 @@ public class ExpertEvenementController implements Initializable {
         event_amount.setCellValueFactory(new PropertyValueFactory("nbr_place"));
         table.setItems(data);
     }
-      public void initializeFxml() {
-         show();
+
+    public void initializeFxml() {
+        show();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
 
         // TODO
-        
-
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -143,7 +147,7 @@ public class ExpertEvenementController implements Initializable {
                     ev_date.setValue(e.getDate().toLocalDate());
                     ev_prix.setText(e.getPrix_event());
                     ev_nombr.setText(e.getNbr_place());
-                    pictureLink=e.getImage();
+                    pictureLink = e.getImage();
                     btnajouter.setDisable(true);
 
                 }
@@ -179,6 +183,8 @@ public class ExpertEvenementController implements Initializable {
         }
     }
 
+    private java.util.Date dateNow;
+
     @FXML
     private void Ajout(ActionEvent event) {
 
@@ -212,15 +218,24 @@ public class ExpertEvenementController implements Initializable {
             dialogW.setHeaderText(null); // No header
             dialogW.setContentText("veuillez remplir le champ de nombre de place s'il vous plait!");
             dialogW.showAndWait();
+        } else if (new Date().after(java.sql.Date.valueOf(ev_date.getValue()))) {
+            Alert dialogW = new Alert(Alert.AlertType.WARNING);
+            dialogW.setTitle("A warning dialog-box");
+            dialogW.setHeaderText(null); // No header
+            dialogW.setContentText("veuillez choisir une addresse supeieure a celle d'aujourd'hui");
+            dialogW.showAndWait();
+
         } else {
-            
-            evenement e = new Entities.evenement(ev_nom.getText(), ev_desc.getText(), Date.valueOf(ev_date.getValue()), ev_prix.getText(), ev_nombr.getText(), this.pictureLink,idUser);
+
+            evenement e = new Entities.evenement(ev_nom.getText(), ev_desc.getText(), java.sql.Date.valueOf(ev_date.getValue()), ev_prix.getText(), ev_nombr.getText(), this.pictureLink, idUser);
             e.setIdUser(idUser);
             cr.createEvenement(e);
+                    clear();
+                            show();
+
+
         }
 
-       show();
-        clear();
 
     }
 
@@ -254,7 +269,7 @@ public class ExpertEvenementController implements Initializable {
             if (table.getSelectionModel().getSelectedItem() != null) {
                 JOptionPane.showMessageDialog(null, "Evenement Supprimee");
                 cr.delete(table.getSelectionModel().getSelectedItem().getId());
-              show();
+                show();
             }
             clear();
         } else {
@@ -265,13 +280,12 @@ public class ExpertEvenementController implements Initializable {
     @FXML
     private void Modifier(ActionEvent event) {
         if (table.getSelectionModel().getSelectedItem() != null) {
-            cr.update(new Entities.evenement(ev_nom.getText(), ev_desc.getText(), Date.valueOf(ev_date.getValue()), ev_prix.getText(), ev_nombr.getText(), this.pictureLink), table.getSelectionModel().getSelectedItem().getId());
+            cr.update(new Entities.evenement(ev_nom.getText(), ev_desc.getText(), java.sql.Date.valueOf(ev_date.getValue()), ev_prix.getText(), ev_nombr.getText(), this.pictureLink), table.getSelectionModel().getSelectedItem().getId());
             show();
-            }
-            clear();
-
         }
-    
+        clear();
+
+    }
 
     @FXML
     private void Clear(ActionEvent event) {
@@ -293,6 +307,8 @@ public class ExpertEvenementController implements Initializable {
         if (selectedFile != null) {
             BufferedImage bufferedImage = ImageIO.read(selectedFile);
             WritableImage image = SwingFXUtils.toFXImage(bufferedImage, null);
+            
+            
 
             //this.image.setText(selectedFile.getName());;
             this.pictureLink = selectedFile.getName();

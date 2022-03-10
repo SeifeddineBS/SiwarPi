@@ -123,6 +123,12 @@ public class ObjEvenementController implements Initializable {
         return sortie;
 
     }
+         public void alert_Box(String title, String message) {
+        Alert dg = new Alert(Alert.AlertType.WARNING);
+        dg.setTitle(title);
+        dg.setContentText(message);
+        dg.show();
+    }
 
     @FXML
     private void Join(ActionEvent event) {
@@ -132,8 +138,10 @@ public class ObjEvenementController implements Initializable {
         System.out.println("Hey"+idUser);
         EvenementService evs = new EvenementService();
         Reservation r = new Reservation(idUser, evenement.getId());
-        evs.JoinEvent(r);
-        ServiceNotification Notification = new ServiceNotification();
+        
+        if(evs.JoinEvent(r))
+        {
+              ServiceNotification Notification = new ServiceNotification();
         
         join.setVisible(false);
         leave.setVisible(true);
@@ -141,6 +149,13 @@ public class ObjEvenementController implements Initializable {
 
     sendMail.envoyerMail(evs.getExpert(evenement.getIdUser()).getAdresseMail(), "Une nouvelle reservation a votre evenement", "Une nouvelle reservation a votre evenement "+evenement.getNom_event());
                 Notification.Notification("Succee", "participation confirme");
+                setData(evenement,idUser);
+                
+        }
+        else {
+            alert_Box("Evenement"," Mlaheureusement les places sont limitées");
+        }
+      
 
         
         }

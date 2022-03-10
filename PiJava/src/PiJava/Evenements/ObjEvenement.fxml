@@ -46,7 +46,10 @@
             </HBox>
             <HBox prefHeight="26.0" prefWidth="217.0" spacing="20.0">
                <children>
-                  <Label prefHeight="18.0" prefWidth="49.0" text="Nombre" />
+                  <Label prefHeight="18.0" prefWidth="49.0" text="Nombre">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
                   <Label fx:id="lb_duree1" prefHeight="18.0" prefWidth="138.0" text="Label" />
                </children>
             </HBox>

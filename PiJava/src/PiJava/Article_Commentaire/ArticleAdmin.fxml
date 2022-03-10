@@ -20,7 +20,7 @@
                </columns>
             </TableView>
             <Button layoutX="425.0" layoutY="521.0" mnemonicParsing="false" onAction="#supprimer" text="supprimer" />
-            <Button layoutX="321.0" layoutY="521.0" mnemonicParsing="false" onAction="#review" prefHeight="25.0" prefWidth="70.0" text="review" />
+            <Button layoutX="321.0" layoutY="521.0" mnemonicParsing="false" onAction="#review" prefHeight="25.0" prefWidth="70.0" text="voir" />
             <Button fx:id="trier" layoutX="524.0" layoutY="521.0" mnemonicParsing="false" onAction="#trier" prefHeight="25.0" prefWidth="70.0" text="trier" />
             <Button fx:id="nonApprouverArticle" layoutX="145.0" layoutY="521.0" mnemonicParsing="false" onAction="#nonApprouverArticle" prefHeight="26.0" prefWidth="162.0" text="non approuver" />
             <Button fx:id="approuverarticle" layoutX="145.0" layoutY="521.0" mnemonicParsing="false" onAction="#approuverarticle" prefHeight="26.0" prefWidth="162.0" text="approuver" />

@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -214,7 +215,7 @@ ObservableList<evenement> myList = FXCollections.observableArrayList();
 
      }
      
-     public void JoinEvent(Reservation r){
+     public boolean JoinEvent(Reservation r){
           try {
                 evenement e =  findEventById(r.getId_evenement());
                 if(Integer.parseInt(e.getNbr_place())> e.getParticipants()){
@@ -236,17 +237,19 @@ ObservableList<evenement> myList = FXCollections.observableArrayList();
             System.out.println(e);
             update(e,e.getId());
             System.out.println("participant added");
+            return true;
 
          } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+           return false;
         }}
                 else{
-                                System.out.println("Evenement fermer");
+                    return false;
 
                 }
           }catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+          return false;
            
     }     
      
@@ -326,7 +329,8 @@ ObservableList<evenement> myList = FXCollections.observableArrayList();
         return c;
 
     }
-     
+           
+
      
      
 }
